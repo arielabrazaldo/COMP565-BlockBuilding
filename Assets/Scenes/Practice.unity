@@ -202,13 +202,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 1231d20a2b113914e86fb744ff473a20, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1858271693}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: myButtonClick
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -413,6 +413,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MyFirstDemo
   direction: 1
   geoIndex: 0
+  cubeMaterial: {fileID: 2100000, guid: 3fb913f0bac621c419c5cd809d769c54, type: 2}
+  sphereMaterial: {fileID: 2100000, guid: 3a9486ed3ec0b9d4e8a5bdb7bbb889e3, type: 2}
+  capsuleMaterial: {fileID: 2100000, guid: 0a2e42bf96403ca418e7bcaa1dd88ec0, type: 2}
 --- !u!65 &305677323
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -518,7 +521,7 @@ GameObject:
   - component: {fileID: 351768460}
   - component: {fileID: 351768459}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -588,14 +591,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 1231d20a2b113914e86fb744ff473a20, type: 3}
-        m_TargetAssemblyTypeName: UnityEditor.MonoScript, UnityEditor.CoreModule
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1858271693}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: myButtonClick
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -729,7 +732,7 @@ GameObject:
   - component: {fileID: 833923111}
   - component: {fileID: 833923110}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: UIPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -878,14 +881,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 1231d20a2b113914e86fb744ff473a20, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1858271693}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: myButtonClick
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1058,8 +1061,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2932061, y: -0.4358206, z: 0.15264569, w: 0.837132}
-  m_LocalPosition: {x: 7.466259, y: 3.9008818, z: -4.663364}
+  m_LocalRotation: {x: 0.28482923, y: 0.31301102, z: -0.09899363, w: 0.90060914}
+  m_LocalPosition: {x: -7.3446946, y: 6.1984496, z: -7.8603673}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1396,7 +1399,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: Capsule
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
