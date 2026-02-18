@@ -61,6 +61,7 @@ public class MyMouseInput : MonoBehaviour
             bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
             if (hit)
             {
+                // create myGO object based on the button selected in the UI and places on plane
                 switch (geoIndex)
                 {
                     case 0:
