@@ -8,7 +8,7 @@ public class MyMouseInput : MonoBehaviour
     public int direction = 1;
     public int geoIndex = 0;
 
-    // for textures
+    //  headers for textures
     public Material cubeMaterial;
     public Material sphereMaterial;
     public Material capsuleMaterial;
@@ -61,6 +61,9 @@ public class MyMouseInput : MonoBehaviour
             bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
             if (hit)
             {
+                //cube.GetComponent<BoxCollider>().isTrigger = true;
+                //cube.GetComponent<Renderer>().material = blockMaterial;
+
                 // create myGO object based on the button selected in the UI and places on plane
                 switch (geoIndex)
                 {
@@ -78,6 +81,7 @@ public class MyMouseInput : MonoBehaviour
                         break;
                 }
 
+                //cube.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y + 0.5f, hitInfo.point.z);
                 if (hitInfo.transform.tag.Equals("Ground"))
                 {
                     myGO.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y + (0.5f), hitInfo.point.z);
@@ -111,12 +115,20 @@ public class MyMouseInput : MonoBehaviour
                     }
                 }
 
+                Debug.DrawRay(hitInfo.point, hitInfo.normal, Color.red, 2, false);
+                Debug.Log(hitInfo.normal);
+
             }
             else
             {
                 Debug.Log("No hit");
             }
             #endregion
+        }
+
+        else if (Input.GetMouseButtonUp(1)) // right click for removing
+        {
+            Debug.Log("Right click");
         }
 
     }
