@@ -7,20 +7,23 @@ public class MyMouseInput : MonoBehaviour
 
     public int direction = 1;
     public int geoIndex = 0;
+    public int textureIndex = 0;
 
     //  headers for textures
-    public Material cubeMaterial;
-    public Material sphereMaterial;
-    public Material capsuleMaterial;
+    public Material material1;
+    public Material material2;
+    public Material material3;
 
     private void OnEnable()
     {
         UIManager.OnChangeGeometry += UIManagerOnChangeGeometry;
+        UIManager.OnChangeTexture += UIManagerOnChangeTexture;
     }
 
     private void OnDisable()
     {
         UIManager.OnChangeGeometry -= UIManagerOnChangeGeometry;
+        UIManager.OnChangeTexture -= UIManagerOnChangeTexture;
     }
 
     // ui buttons to change shapes
@@ -37,6 +40,24 @@ public class MyMouseInput : MonoBehaviour
                 break;
             case 2:
                 Debug.Log("Capsule Selected");
+                break;
+        }
+    }
+
+    // ui buttons to change texture
+    private void UIManagerOnChangeTexture(int value)
+    {
+        textureIndex = value;
+        switch (value)
+        {
+            case 0:
+                Debug.Log("Stone Blocks selected");
+                break;
+            case 1:
+                Debug.Log("Stone Blocks 2 selected");
+                break;
+            case 2:
+                Debug.Log("Metal Blocks selected");
                 break;
         }
     }
@@ -69,15 +90,29 @@ public class MyMouseInput : MonoBehaviour
                 {
                     case 0:
                         myGO = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                        myGO.GetComponent<Renderer>().material = cubeMaterial;
+                        //myGO.GetComponent<Renderer>().material = material1;
                         break;
                     case 1:
                         myGO = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                        myGO.GetComponent<Renderer>().material = sphereMaterial;
+                        //myGO.GetComponent<Renderer>().material = material2;
                         break;
                     case 2:
                         myGO = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-                        myGO.GetComponent<Renderer>().material = capsuleMaterial;
+                        //myGO.GetComponent<Renderer>().material = material3;
+                        break;
+                }
+
+                // change textures based on button selected in the UI
+                switch (textureIndex)
+                {
+                    case 0:
+                        myGO.GetComponent<Renderer>().material = material1;
+                        break;
+                    case 1:
+                        myGO.GetComponent<Renderer>().material = material2;
+                        break;
+                    case 2:
+                        myGO.GetComponent<Renderer>().material = material3;
                         break;
                 }
 
