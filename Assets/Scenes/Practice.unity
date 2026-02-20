@@ -413,9 +413,11 @@ MonoBehaviour:
   direction: 1
   geoIndex: 0
   textureIndex: 0
-  material1: {fileID: 2100000, guid: 3a9486ed3ec0b9d4e8a5bdb7bbb889e3, type: 2}
-  material2: {fileID: 2100000, guid: 3fb913f0bac621c419c5cd809d769c54, type: 2}
+  material1: {fileID: 2100000, guid: 3fb913f0bac621c419c5cd809d769c54, type: 2}
+  material2: {fileID: 2100000, guid: 3a9486ed3ec0b9d4e8a5bdb7bbb889e3, type: 2}
   material3: {fileID: 2100000, guid: 0a2e42bf96403ca418e7bcaa1dd88ec0, type: 2}
+  transparentYellow: {fileID: 2100000, guid: 86b4304ff801737449105d8a27207262, type: 2}
+  transparentGreen: {fileID: 2100000, guid: c7ed82623100a8342951bfab223f492a, type: 2}
 --- !u!65 &305677323
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -462,7 +464,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 16284726c3090384cb0777300a708e7b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -653,7 +655,7 @@ GameObject:
   - component: {fileID: 396379419}
   - component: {fileID: 396379418}
   m_Layer: 5
-  m_Name: MetalBlocks
+  m_Name: RedPattern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -754,7 +756,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 14e08f4816705df458db1e053bcca334, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8510724799d46f84fb52e25b841366d8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -785,7 +787,7 @@ GameObject:
   - component: {fileID: 619624451}
   - component: {fileID: 619624450}
   m_Layer: 5
-  m_Name: StoneBlocks2
+  m_Name: BlackPattern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -886,7 +888,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d53fa828d9a6d55479023498b6caab96, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d930c2be1f74b684e8dc7b4f16ef1f08, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1421,7 +1423,7 @@ GameObject:
   - component: {fileID: 1373807838}
   - component: {fileID: 1373807837}
   m_Layer: 5
-  m_Name: StoneBlocks
+  m_Name: Chrome
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1522,7 +1524,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 90a40d9ce7fa1e449a399d8521994f35, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 96363fcea2b3b964b8747539960d087f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,10 +10,20 @@ public class MyMouseInput : MonoBehaviour
     public int geoIndex = 0;
     public int textureIndex = 0;
 
+    private GameObject myGO;
+
     //  headers for textures
     public Material material1;
     public Material material2;
     public Material material3;
+
+    // transparent preview
+    public Material transparentYellow;
+    public Material transparentGreen;
+
+    private GameObject preview;
+    private bool previewAttach;
+    private Vector3 previewPosition;
 
     private void OnEnable()
     {
@@ -31,6 +41,7 @@ public class MyMouseInput : MonoBehaviour
     private void UIManagerOnChangeGeometry(int value)
     {
         geoIndex = value;
+        CreatePreview();
         switch (value)
         {
             case 0:
@@ -62,17 +73,108 @@ public class MyMouseInput : MonoBehaviour
                 break;
         }
     }
+    private void CreatePreview()
+    {
+        if (preview != null)
+        {
+            Destroy(preview);
+        }
 
-    private GameObject myGO;
+        switch (geoIndex)
+        {
+            case 0:
+                preview = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                break;
+            case 1:
+                preview = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                break;
+            case 2:
+                preview = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+                break;
+        }
+
+        preview.name = "TransparentPreview";
+
+        // preview should not block raycasts or collider 
+        var collide = preview.GetComponent<Collider>();
+        if (collide != null)
+        {
+            Destroy(collide);
+        }
+
+        // ignore raycast layer so raycast wont hit ghost
+        preview.layer = 2;
+
+        var render = preview.GetComponent<Renderer>();
+        if (render != null)
+        {
+            render.material = transparentYellow;
+        }
+    }
+
+    private void UpdatePreview()
+    {
+        if (preview == null)
+        {
+            return;
+        }
+
+        // prevent ghost from showing on UI
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            preview.SetActive(false);
+            return;
+        }
+
+        RaycastHit hitInfo;
+        bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+
+        if (!hit)
+        {
+            preview.SetActive(false);
+            return;
+        }
+
+        preview.SetActive(true);
+
+        previewAttach = false;
+
+        // hover around plane, show transparent yellow block preview
+        if (hitInfo.transform.CompareTag("Ground"))
+        {
+            previewPosition = new Vector3(hitInfo.point.x, hitInfo.point.y + 0.5f, hitInfo.point.z);
+            preview.GetComponent<Renderer>().material = transparentYellow;
+        }
+
+        // building on top of existing block on plane
+        else if (hitInfo.transform.CompareTag("Block"))
+        {
+            previewPosition = hitInfo.transform.position + hitInfo.normal * 1.0f;
+            previewAttach = true;
+            preview.GetComponent<Renderer>().material = transparentGreen;
+        }
+
+        else
+        {
+            preview.SetActive(false);
+            return;
+        }
+
+        preview.transform.position = previewPosition;
+
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Debug.Log($"Hello from the Start function!");
+        CreatePreview();
     }
 
     void Update()
     {
+        UpdatePreview();
+
         // prevent right clicking of ui buttons from rayscating and deleting stuff on plane
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
         {
@@ -117,19 +219,19 @@ public class MyMouseInput : MonoBehaviour
                     myGO.AddComponent<TriangleExplosion>();
                 }
 
-                    // change textures based on button selected in the UI
-                    switch (textureIndex)
-                    {
-                        case 0:
-                            myGO.GetComponent<Renderer>().material = material1;
-                            break;
-                        case 1:
-                            myGO.GetComponent<Renderer>().material = material2;
-                            break;
-                        case 2:
-                            myGO.GetComponent<Renderer>().material = material3;
-                            break;
-                    }
+                // change textures based on button selected in the UI
+                switch (textureIndex)
+                {
+                    case 0:
+                        myGO.GetComponent<Renderer>().material = material1;
+                        break;
+                    case 1:
+                        myGO.GetComponent<Renderer>().material = material2;
+                        break;
+                    case 2:
+                        myGO.GetComponent<Renderer>().material = material3;
+                        break;
+                }
 
                 //cube.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y + 0.5f, hitInfo.point.z);
                 if (hitInfo.transform.tag.Equals("Ground"))
@@ -197,7 +299,7 @@ public class MyMouseInput : MonoBehaviour
             {
                 return;
             }
-            
+
             // only remove blocks you placed 
             if (!hitInfo.transform.CompareTag("Block"))
             {
