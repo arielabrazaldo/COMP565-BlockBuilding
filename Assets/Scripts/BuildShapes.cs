@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MyMouseInput : MonoBehaviour
 {
@@ -72,6 +73,12 @@ public class MyMouseInput : MonoBehaviour
 
     void Update()
     {
+        // prevent right clicking of ui buttons from rayscating and deleting stuff on plane
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonUp(0))  // check if left button is pressed
         {
             // take mouse position, convert from screen space to world space, do a raycast, store output of raycast into 
@@ -102,19 +109,27 @@ public class MyMouseInput : MonoBehaviour
                         break;
                 }
 
-                // change textures based on button selected in the UI
-                switch (textureIndex)
+                myGO.tag = "Block";
+
+                // explosion script
+                if (myGO.GetComponent<TriangleExplosion>() == null)
                 {
-                    case 0:
-                        myGO.GetComponent<Renderer>().material = material1;
-                        break;
-                    case 1:
-                        myGO.GetComponent<Renderer>().material = material2;
-                        break;
-                    case 2:
-                        myGO.GetComponent<Renderer>().material = material3;
-                        break;
+                    myGO.AddComponent<TriangleExplosion>();
                 }
+
+                    // change textures based on button selected in the UI
+                    switch (textureIndex)
+                    {
+                        case 0:
+                            myGO.GetComponent<Renderer>().material = material1;
+                            break;
+                        case 1:
+                            myGO.GetComponent<Renderer>().material = material2;
+                            break;
+                        case 2:
+                            myGO.GetComponent<Renderer>().material = material3;
+                            break;
+                    }
 
                 //cube.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y + 0.5f, hitInfo.point.z);
                 if (hitInfo.transform.tag.Equals("Ground"))
@@ -154,6 +169,7 @@ public class MyMouseInput : MonoBehaviour
                 Debug.Log(hitInfo.normal);
 
             }
+
             else
             {
                 Debug.Log("No hit");
@@ -161,9 +177,44 @@ public class MyMouseInput : MonoBehaviour
             #endregion
         }
 
-        else if (Input.GetMouseButtonUp(1)) // right click for removing
+        else if (Input.GetMouseButtonUp(1)) // right click for removing and explosion
         {
             Debug.Log("Right click");
+
+            RaycastHit hitInfo = new RaycastHit();
+            bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+
+            if (!hit)
+            {
+                Debug.Log("No hit");
+                return;
+            }
+
+            Debug.Log("Hit: " + hitInfo.transform.name + " Tag: " + hitInfo.transform.tag);
+
+            // Don't remove the ground
+            if (hitInfo.transform.CompareTag("Ground"))
+            {
+                return;
+            }
+            
+            // only remove blocks you placed 
+            if (!hitInfo.transform.CompareTag("Block"))
+            {
+                return;
+            }
+
+            TriangleExplosion exp = hitInfo.transform.GetComponent<TriangleExplosion>();
+            if (exp != null)
+            {
+                StartCoroutine(exp.SplitMesh(true));
+            }
+
+            else
+            {
+                Destroy(hitInfo.transform.gameObject);
+            }
+
         }
 
     }

@@ -8,9 +8,9 @@ public class TriangleExplosion : MonoBehaviour
     public IEnumerator SplitMesh(bool destroy)
     {
 
-        if (GetComponent<MeshFilter>() == null || GetComponent<SkinnedMeshRenderer>() == null)
+        if (GetComponent<MeshFilter>() == null && GetComponent<SkinnedMeshRenderer>() == null)
         {
-            yield return null;
+            yield break;
         }
 
         if (GetComponent<Collider>())
